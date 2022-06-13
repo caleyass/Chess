@@ -16,6 +16,7 @@ import static com.chess.engine.board.Move.AttackMove;
 
 public class King extends Piece{
 
+    /**The coordinates along which the horse moves */
     private static final int[] CANDIDATE_MOVE_COORDINATE = { -9, -8, -7, -1, 1, 7, 8, 9 };
 
     public King( final Alliance pieceAlliance, final int piecePosition) {

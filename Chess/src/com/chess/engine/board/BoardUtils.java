@@ -17,6 +17,9 @@ public class BoardUtils {
     private BoardUtils(){
         throw new RuntimeException("You can`t instantiate me");
     }
+
+    /**All tiles in row become true
+     * @return column array len = 8*/
     private static boolean[] initColumn(int columnNumber) {
         final boolean[] column = new boolean[NUM_TILES];
         while(columnNumber<NUM_TILES){

@@ -6,7 +6,7 @@ import com.chess.engine.board.Move;
 import com.chess.engine.pieces.King;
 import com.chess.engine.pieces.Piece;
 import com.google.common.collect.ImmutableList;
-import com.sun.corba.se.spi.ior.iiop.AlternateIIOPAddressComponent;
+import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,11 +21,11 @@ public abstract class Player {
     protected Player(Board board, Collection<Move> legalMoves, Collection<Move> opponentMoves) {
         this.board = board;
         this.playerKing = establishKing();
-        isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
-        this.legalMoves = legalMoves;
+        this.isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
+        this.legalMoves = ImmutableList.copyOf(Iterables.concat(legalMoves, calculateKingCastles(legalMoves, opponentMoves)));
     }
 
-    private static Collection<Move> calculateAttacksOnTile(Integer piecePosition, Collection<Move> opponentMoves) {
+    protected static Collection<Move> calculateAttacksOnTile(Integer piecePosition, Collection<Move> opponentMoves) {
         final List<Move> attackMoves = new ArrayList<>();
         for (Move move : opponentMoves) {
             if (piecePosition.equals(move.getDestinationCoordinate())) {
@@ -92,7 +92,7 @@ public abstract class Player {
         return new MoveTransition(this.board, move, MoveStatus.DONE);
     }
 
-    private Collection<Move> getLegalMoves() {
+    public Collection<Move> getLegalMoves() {
         return this.legalMoves;
     }
 
@@ -103,4 +103,5 @@ public abstract class Player {
     public abstract Collection<Piece> getActivePieces();
     public abstract Alliance getAlliance();
     public abstract Player getOpponent();
+    protected abstract Collection<Move> calculateKingCastles(Collection<Move> playerLegals, Collection<Move> opponentsLegal);
 }
