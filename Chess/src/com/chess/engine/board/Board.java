@@ -43,6 +43,7 @@ public class Board {
         for (int i = 0; i < BoardUtils.NUM_TILES; i++) {
             final String tileText = this.gameBoard.get(i).toString();
             builder.append(String.format("%3s", tileText));
+
             if ((i + 1) % BoardUtils.NUM_TILES_PER_ROW == 0) {
                 builder.append("\n");
             }
@@ -95,7 +96,14 @@ public class Board {
         builder.setPiece(new Bishop(Alliance.BLACK, 5));
         builder.setPiece(new Knight(Alliance.BLACK, 6));
         builder.setPiece(new Rook(Alliance.BLACK, 7));
-        for (int i = 0; i < 8; i++) builder.setPiece(new Pawn(Alliance.BLACK, 8+i));
+        builder.setPiece(new Pawn(Alliance.BLACK, 8));
+        builder.setPiece(new Pawn(Alliance.BLACK, 9));
+        builder.setPiece(new Pawn(Alliance.BLACK, 10));
+        builder.setPiece(new Pawn(Alliance.BLACK, 11));
+        builder.setPiece(new Pawn(Alliance.BLACK, 12));
+        builder.setPiece(new Pawn(Alliance.BLACK, 13));
+        builder.setPiece(new Pawn(Alliance.BLACK, 14));
+        builder.setPiece(new Pawn(Alliance.BLACK, 15));
 
         // White Layout
         builder.setPiece(new Rook(Alliance.WHITE, 56));
@@ -106,8 +114,15 @@ public class Board {
         builder.setPiece(new Bishop(Alliance.WHITE, 61));
         builder.setPiece(new Knight(Alliance.WHITE, 62));
         builder.setPiece(new Rook(Alliance.WHITE, 63));
+        builder.setPiece(new Pawn(Alliance.WHITE, 48));
+        builder.setPiece(new Pawn(Alliance.WHITE, 49));
+        builder.setPiece(new Pawn(Alliance.WHITE, 50));
+        builder.setPiece(new Pawn(Alliance.WHITE, 51));
+        builder.setPiece(new Pawn(Alliance.WHITE, 52));
+        builder.setPiece(new Pawn(Alliance.WHITE, 53));
+        builder.setPiece(new Pawn(Alliance.WHITE, 54));
+        builder.setPiece(new Pawn(Alliance.WHITE, 55));
 
-        for (int i = 0; i < 8; i++) builder.setPiece(new Pawn(Alliance.WHITE, 48+i));
 
         builder.setMoveMaker(Alliance.WHITE);
         return builder.build();

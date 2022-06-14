@@ -20,9 +20,11 @@ public class King extends Piece{
     private static final int[] CANDIDATE_MOVE_COORDINATE = { -9, -8, -7, -1, 1, 7, 8, 9 };
 
     public King( final Alliance pieceAlliance, final int piecePosition) {
-        super(piecePosition, pieceAlliance, PieceType.KING);
+        super(piecePosition, pieceAlliance, PieceType.KING, true);
     }
-
+    public King( final Alliance pieceAlliance, final int piecePosition, final boolean isFirstMove) {
+        super(piecePosition, pieceAlliance, PieceType.KING, isFirstMove);
+    }
     @Override
     public Collection<Move> calculateLegalMoves(final Board board) {
         final List<Move> legalMoves = new ArrayList<>();

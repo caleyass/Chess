@@ -89,7 +89,7 @@ public abstract class Player {
             return new MoveTransition(this.board, move, MoveStatus.LEAVES_PLAYER_IN_CHECK);
         }
 
-        return new MoveTransition(this.board, move, MoveStatus.DONE);
+        return new MoveTransition(transitionBoard, move, MoveStatus.DONE);
     }
 
     public Collection<Move> getLegalMoves() {

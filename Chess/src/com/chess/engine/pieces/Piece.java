@@ -14,12 +14,12 @@ public abstract class Piece {
     protected final PieceType pieceType;
     private final int cachedHashCode;
 
-    Piece(final int piecePosition, final Alliance pieceAlliance, final PieceType pieceType) {
+    Piece(final int piecePosition, final Alliance pieceAlliance, final PieceType pieceType, final boolean isFirstMove) {
         this.piecePosition = piecePosition;
         this.pieceAlliance = pieceAlliance;
         this.pieceType = pieceType;
         //TODO more work here
-        this.isFirstMove = false;
+        this.isFirstMove = isFirstMove;
         this.cachedHashCode = computeHashCode();
     }
 
@@ -61,7 +61,7 @@ public abstract class Piece {
     public PieceType getPieceType() {return this.pieceType;}
 
     public enum PieceType{
-        PAWN("PAWN"){
+        PAWN("P"){
             @Override
             public boolean isKing() {
                 return false;
@@ -72,7 +72,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        ROOK("ROOK"){
+        ROOK("R"){
             @Override
             public boolean isKing() {
                 return false;
@@ -83,7 +83,7 @@ public abstract class Piece {
                 return true;
             }
         },
-        KNIGHT("NIGHT"){
+        KNIGHT("N"){
             @Override
             public boolean isKing() {
                 return false;
@@ -94,7 +94,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        BISHOP("BISHOP"){
+        BISHOP("B"){
             @Override
             public boolean isKing() {
                 return false;
@@ -105,7 +105,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        QUEEN("QUEEN"){
+        QUEEN("Q"){
             @Override
             public boolean isKing() {
                 return false;
@@ -116,7 +116,7 @@ public abstract class Piece {
                 return false;
             }
         },
-        KING("KING"){
+        KING("K"){
             @Override
             public boolean isKing() {
                 return true;
