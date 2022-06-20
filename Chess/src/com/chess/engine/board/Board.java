@@ -141,11 +141,11 @@ public class Board {
         return whitePieces;
     }
 
-    public Player getWhitePlayer() {
+    public Player whitePlayer() {
         return this.whitePlayer;
     }
 
-    public Player getBlackPlayer() {
+    public Player blackPlayer() {
         return this.blackPlayer;
     }
 

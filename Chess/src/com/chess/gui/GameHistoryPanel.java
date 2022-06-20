@@ -37,13 +37,16 @@ class GameHistoryPanel extends JPanel {
         int currentRow = 0;
         this.model.clear();
         for (final Move move : moveHistory.getMoves()) {
-            final String moveText = move.toString();
-            if (move.getMovedPiece().getPieceAlliance().isWhite()) {
-                this.model.setValueAt(moveText, currentRow, 0);
-            }
-            else if (move.getMovedPiece().getPieceAlliance().isBlack()) {
-                this.model.setValueAt(moveText, currentRow, 1);
-                currentRow++;
+            final String moveText;
+            if(move!=null) {
+                moveText = move.toString();
+
+                if (move.getMovedPiece().getPieceAlliance().isWhite()) {
+                    this.model.setValueAt(moveText, currentRow, 0);
+                } else if (move.getMovedPiece().getPieceAlliance().isBlack()) {
+                    this.model.setValueAt(moveText, currentRow, 1);
+                    currentRow++;
+                }
             }
         }
 

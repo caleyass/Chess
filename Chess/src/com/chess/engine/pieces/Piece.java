@@ -64,6 +64,11 @@ public abstract class Piece {
         return this.pieceType.getPieceValue();
     }
 
+    public Alliance getPieceAllegiance() {
+        return this.pieceAlliance;
+    }
+
+
     public enum PieceType{
         PAWN(100, "P") {
             @Override
