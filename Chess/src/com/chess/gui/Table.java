@@ -10,7 +10,6 @@ import com.chess.engine.player.Player;
 import com.chess.engine.player.ai.MiniMax;
 import com.chess.engine.player.ai.MoveStrategy;
 import com.google.common.collect.Lists;
-import javafx.scene.control.Tab;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

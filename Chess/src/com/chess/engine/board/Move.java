@@ -301,6 +301,10 @@ public abstract class Move {
             builder.setMoveMaker(this.board.currentPlayer().getOpponent().getAlliance());
             return builder.build();
         }
+        @Override
+        public String toString() {
+            return BoardUtils.getPositionAtCoordinate(this.destinationCoordinate);
+        }
     }
 
     static class CastleMove extends Move{

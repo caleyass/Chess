@@ -65,7 +65,7 @@ public class Queen extends Piece{
     }
 
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
-        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset==-8 || candidateOffset==7 || candidateOffset==-1);
+        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset==-9 || candidateOffset==7 || candidateOffset==-1);
     }
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.EIGHT_COLUMN[currentPosition] && (candidateOffset==-7 || candidateOffset==9 || candidateOffset==1);
