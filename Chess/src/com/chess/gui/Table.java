@@ -319,10 +319,18 @@ public class Table extends Observable {
                             if(transition.getMoveStatus().isDone()){
                                 chessBoard = transition.getTransitionBoard();
                                 moveLog.addMove(move);
-                                if(chessBoard.currentPlayer().isInCheckMate()){
+                                if(chessBoard.currentPlayer().isInCheckMate() || chessBoard.currentPlayer().isInStaleMate()){
                                     //JOptionPane.showMessageDialog(null, chessBoard.currentPlayer().getAlliance()+" is in checkmate!");
+                                    String text = chessBoard.currentPlayer().getAlliance()+" ";
+                                    if(chessBoard.currentPlayer().isInCheckMate()){
+                                        text+="is in checkmate!";
+                                    }
+                                    else{
+                                        text+="is in stalemate!";
+                                    }
+
                                     String[] buttons = { "New game", "Exit" };
-                                    int returnValue = JOptionPane.showOptionDialog(null, chessBoard.currentPlayer().getAlliance()+" is in checkmate!", "End game",
+                                    int returnValue = JOptionPane.showOptionDialog(null, text, "End game",
                                             JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
                                     System.out.println(returnValue);
                                     if(returnValue == 0){
@@ -331,7 +339,6 @@ public class Table extends Observable {
                                     else{
                                         System.exit(0);
                                     }
-
                                 }
                             }
                             sourceTile = null;
