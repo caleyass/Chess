@@ -5,6 +5,7 @@ import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
 import com.chess.engine.pieces.Piece;
+import com.chess.engine.player.MoveStatus;
 import com.chess.engine.player.MoveTransition;
 import com.chess.engine.player.Player;
 import com.chess.engine.player.ai.MiniMax;
@@ -55,7 +56,7 @@ public class Table extends Observable {
     private final Color lightTileColor = Color.decode("#FFFACD");
     private final Color darkTileColor = Color.decode("#593E1A");
 
-    private static final Table INSTANCE = new Table();
+    private static Table INSTANCE = new Table();
 
 
     enum PlayerType{
@@ -83,7 +84,11 @@ public class Table extends Observable {
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.setVisible(true);
     }
-
+    private Table restart(){
+        this.gameFrame.dispose();
+        INSTANCE = new Table();
+        return INSTANCE;
+    }
     public static Table get(){
         return INSTANCE;
     }
@@ -314,6 +319,20 @@ public class Table extends Observable {
                             if(transition.getMoveStatus().isDone()){
                                 chessBoard = transition.getTransitionBoard();
                                 moveLog.addMove(move);
+                                if(chessBoard.currentPlayer().isInCheckMate()){
+                                    //JOptionPane.showMessageDialog(null, chessBoard.currentPlayer().getAlliance()+" is in checkmate!");
+                                    String[] buttons = { "New game", "Exit" };
+                                    int returnValue = JOptionPane.showOptionDialog(null, chessBoard.currentPlayer().getAlliance()+" is in checkmate!", "End game",
+                                            JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
+                                    System.out.println(returnValue);
+                                    if(returnValue == 0){
+                                        restart();
+                                    }
+                                    else{
+                                        System.exit(0);
+                                    }
+
+                                }
                             }
                             sourceTile = null;
                             destinationTile = null;
@@ -384,19 +403,33 @@ public class Table extends Observable {
         }
 
         private void highlightLegals(final Board board){
-            if(true){
                 for(final Move move: pieceLegalMoves(board)){
+
                     if(move.getDestinationCoordinate() == this.tileID){
+
                         try{
-                            add(new JLabel(new ImageIcon(ImageIO.read(new File("art/misc/green_dot.png")).getScaledInstance(20, 20, Image.SCALE_SMOOTH))));
+                            if(!allowedMove(move)) {
+                                add(new JLabel(new ImageIcon(ImageIO.read(new File("art/misc/green_dot.png")).getScaledInstance(20, 20, Image.SCALE_SMOOTH))));
+                            }
+                            else{
+                                add(new JLabel(new ImageIcon(ImageIO.read(new File("art/misc/red_dot.png")).getScaledInstance(20, 20, Image.SCALE_SMOOTH))));
+                            }
                         }catch (IOException e){
                             e.printStackTrace();
                         }
                     }
                 }
-            }
-        }
 
+        }
+        private boolean allowedMove(final Move move){
+            if (!Table.get().getGameBoard().currentPlayer().getLegalMoves().contains(move)) {
+                return false;
+            }
+            final Board transitionedBoard = move.execute();
+
+            return transitionedBoard.currentPlayer().getOpponent().isInCheck();
+
+        }
         private Collection<Move> pieceLegalMoves(final Board board) {
             if(humanMovedPiece != null && humanMovedPiece.getPieceAlliance() == board.currentPlayer().getAlliance()){
                 return humanMovedPiece.calculateLegalMoves(board);
