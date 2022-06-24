@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.chess.engine.Alliance;
 import com.chess.engine.board.Board;
 import com.chess.engine.board.Move;
 import com.chess.gui.Table.MoveLog;
@@ -60,11 +61,44 @@ class GameHistoryPanel extends JPanel {
             else if (lastMove.getMovedPiece().getPieceAlliance().isBlack()) {
                 this.model.setValueAt(moveText + calculateCheckAndCheckMateHash(board), currentRow - 1, 1);
             }
+            if(moveHistory.getMoves().size() >= 10){
+                if(checkRepeat(moveHistory.getMoves())){
+                    if(Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() > Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()){
+                        System.out.println("White won.");
+                    }
+                    else if(Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() < Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()){
+                        System.out.println("Black won.");
+                    }
+                    else{
+                        System.out.println("It's a draw.");
+                    }
+                    //todo CHANGE SOMEHOW??
+                    System.exit(0);
+                    }
+            }
+
         }
 
         final JScrollBar vertical = scrollPane.getVerticalScrollBar();
         vertical.setValue(vertical.getMaximum());
 
+    }
+
+    /**
+     * checks if pieces can't find new move. if so, @return true (game over).
+     * wins that player who has more pieces
+     * */
+    private boolean checkRepeat(List<Move> moves) {
+        Move lastMove = moves.get(moves.size()-1);
+        Move lastMove_1 = moves.get(moves.size()-2); // pre last move
+        Move lastMove_2 = moves.get(moves.size()-3); // pre pre last move
+        Move lastMove_3 = moves.get(moves.size()-4);// pre pre pre last move
+
+        //if moves repeat - return true
+        return lastMove.toString().equals(moves.get(moves.size()-5).toString())
+                && lastMove_1.toString().equals(moves.get(moves.size()-6).toString())
+                && lastMove_2.toString().equals(moves.get(moves.size()-7).toString())
+                && lastMove_3.toString().equals(moves.get(moves.size()-8).toString());
     }
 
     private static String calculateCheckAndCheckMateHash(final Board board) {

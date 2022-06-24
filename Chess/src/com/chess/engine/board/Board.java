@@ -65,7 +65,7 @@ public class Board {
         return legalMoves;
     }
 
-    private static Collection<Piece> calculateActivePieces(final List<Tile> gameBoard,final Alliance alliance) {
+    public static Collection<Piece> calculateActivePieces(final List<Tile> gameBoard,final Alliance alliance) {
         final List<Piece> activePieces = new ArrayList<>();
         for (final Tile tile : gameBoard) {
             if (tile.isTileOccupied()) {
@@ -76,6 +76,10 @@ public class Board {
             }
         }
         return ImmutableList.copyOf(activePieces);
+    }
+
+    public List<Tile> getGameBoard() {
+        return gameBoard;
     }
 
     public Tile getTile(int candidateDestinationCoordinate) {
