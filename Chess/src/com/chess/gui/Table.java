@@ -138,16 +138,38 @@ public class Table extends Observable {
                     && !Table.get().getGameBoard().currentPlayer().isInStaleMate()){
                 //create an AI thread
                 //execute AI work
-                final AIThinkTank thinkTank = new AIThinkTank();
+                final AIThinkTank thinkTank = new AIThinkTank(Table.get().getGameSetup().getSearchDepth());
                 thinkTank.execute();
             }
 
-            if(Table.get().getGameBoard().currentPlayer().isInCheckMate()){
-                System.out.println("game over, "+Table.get().getGameBoard().currentPlayer().getAlliance()+" is in checkmate!");
+            if(Table.get().getGameBoard().currentPlayer().isInCheckMate() || Table.get().getGameBoard().currentPlayer().isInStaleMate()){
+                String text = "";
+                switch(Table.get().getGameBoard().currentPlayer().getAlliance()){
+                    case WHITE:
+                        text = "Чорні";
+                        break;
+                    case BLACK:
+                        text = "Білі";
+                        break;
+                }
+                text += " перемогли!";
+                showButton(text);
             }
 
-            if(Table.get().getGameBoard().currentPlayer().isInStaleMate()){
-                System.out.println("game over, "+Table.get().getGameBoard().currentPlayer().getAlliance()+" is in stalemate!");
+        }
+
+
+
+        private void showButton(String text) {
+            String[] buttons = { "Нова гра", "Вийти" };
+            int returnValue = JOptionPane.showOptionDialog(null, text, "Перемога!",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
+            System.out.println(returnValue);
+            if(returnValue == 0){
+                Table.get().restart();
+            }
+            else{
+                System.exit(0);
             }
         }
     }
@@ -183,14 +205,17 @@ public class Table extends Observable {
 
     private static class AIThinkTank extends SwingWorker<Move, String>{
 
-        private AIThinkTank(){
-
+        private int searchDepth = 4;
+        private AIThinkTank(int searchDepth){
+            this.searchDepth = searchDepth;
         }
+
+
 
         @Override
         protected Move doInBackground() throws Exception{
 
-            final MoveStrategy miniMax = new MiniMax(4);
+            final MoveStrategy miniMax = new MiniMax(searchDepth);
 
             final Move bestMove = miniMax.execute(Table.get().getGameBoard());
 
