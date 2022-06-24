@@ -83,7 +83,7 @@ public class Table extends Observable {
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.setVisible(true);
     }
-    private Table restart(){
+    public Table restart(){
         this.gameFrame.dispose();
         INSTANCE = new Table();
         return INSTANCE;
@@ -320,16 +320,18 @@ public class Table extends Observable {
                                 moveLog.addMove(move);
                                 if(chessBoard.currentPlayer().isInCheckMate() || chessBoard.currentPlayer().isInStaleMate()){
                                     //JOptionPane.showMessageDialog(null, chessBoard.currentPlayer().getAlliance()+" is in checkmate!");
-                                    String text = chessBoard.currentPlayer().getAlliance()+" ";
-                                    if(chessBoard.currentPlayer().isInCheckMate()){
-                                        text+="is in checkmate!";
-                                    }
-                                    else{
-                                        text+="is in stalemate!";
+                                    String text = "";
+                                    switch(chessBoard.currentPlayer().getAlliance()){
+                                        case WHITE:
+                                            text = "Білі перемогли!";
+                                            break;
+                                        case BLACK:
+                                            text = "Чорні перемогли!";
+                                            break;
                                     }
 
-                                    String[] buttons = { "New game", "Exit" };
-                                    int returnValue = JOptionPane.showOptionDialog(null, text, "End game",
+                                    String[] buttons = { "Нова гра", "Вийти" };
+                                    int returnValue = JOptionPane.showOptionDialog(null, text, "Перемога!",
                                             JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
                                     System.out.println(returnValue);
                                     if(returnValue == 0){

@@ -4,10 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import com.chess.engine.Alliance;
@@ -63,17 +60,30 @@ class GameHistoryPanel extends JPanel {
             }
             if(moveHistory.getMoves().size() >= 10){
                 if(checkRepeat(moveHistory.getMoves())){
+                    String[] buttons = { "Нова гра", "Вийти" };
+                    String text = "";
                     if(Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() > Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()){
                         System.out.println("White won.");
+                        text = "Білі перемогли!";
                     }
                     else if(Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() < Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()){
                         System.out.println("Black won.");
+                        text = "Чорні перемогли!";
                     }
                     else{
                         System.out.println("It's a draw.");
+                        text = "Нічия!";
                     }
                     //todo CHANGE SOMEHOW??
-                    System.exit(0);
+                    int returnValue = JOptionPane.showOptionDialog(null, text, "Перемога",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
+                    if(returnValue == 0){
+                        Table.get().restart();
+                    }
+                    else{
+                        System.exit(0);
+                    }
+                    //System.exit(0);
                     }
             }
 
