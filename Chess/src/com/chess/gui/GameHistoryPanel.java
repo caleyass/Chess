@@ -38,53 +38,65 @@ class GameHistoryPanel extends JPanel {
             final String moveText;
             if(move!=null) {
                 moveText = move.toString();
-
-                if (move.getMovedPiece().getPieceAlliance().isWhite()) {
-                    this.model.setValueAt(moveText, currentRow, 0);
-                } else if (move.getMovedPiece().getPieceAlliance().isBlack()) {
-                    this.model.setValueAt(moveText, currentRow, 1);
-                    currentRow++;
+                if(moveHistory.getMoves().size() >= 4 && !checkOnePieceRepeat(moveHistory.getMoves()) ) {
+                    if (move.getMovedPiece().getPieceAlliance().isWhite()) {
+                        this.model.setValueAt(moveText, currentRow, 0);
+                    } else if (move.getMovedPiece().getPieceAlliance().isBlack()) {
+                        this.model.setValueAt(moveText, currentRow, 1);
+                        currentRow++;
+                    }
+                }
+                else if(moveHistory.getMoves().size() < 4){
+                    if (move.getMovedPiece().getPieceAlliance().isWhite()) {
+                        this.model.setValueAt(moveText, currentRow, 0);
+                    } else if (move.getMovedPiece().getPieceAlliance().isBlack()) {
+                        this.model.setValueAt(moveText, currentRow, 1);
+                        currentRow++;
+                    }
                 }
             }
         }
 
-        if(moveHistory.getMoves().size() > 0) {
+        if(moveHistory.getMoves().size() > 0 ) {
+            if(moveHistory.getMoves().size() >= 4 && !checkOnePieceRepeat(moveHistory.getMoves()) ){
             final Move lastMove = moveHistory.getMoves().get(moveHistory.size() - 1);
             final String moveText = lastMove.toString();
-
             if (lastMove.getMovedPiece().getPieceAlliance().isWhite()) {
                 this.model.setValueAt(moveText + calculateCheckAndCheckMateHash(board), currentRow, 0);
             }
             else if (lastMove.getMovedPiece().getPieceAlliance().isBlack()) {
                 this.model.setValueAt(moveText + calculateCheckAndCheckMateHash(board), currentRow - 1, 1);
             }
-            if(moveHistory.getMoves().size() >= 10){
-                if(checkRepeat(moveHistory.getMoves())){
-                    String[] buttons = { "Нова гра", "Вийти" };
+            if(moveHistory.getMoves().size() >= 10) {
+                if (checkRepeat(moveHistory.getMoves())) {
+                    String[] buttons = {"Нова гра", "Вийти"};
                     String text = "";
-                    if(Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() > Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()){
-                        System.out.println("White won.");
+                    if (Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() > Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()) {
                         text = "Білі перемогли!";
-                    }
-                    else if(Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() < Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()){
-                        System.out.println("Black won.");
+                    } else if (Board.calculateActivePieces(board.getGameBoard(), Alliance.WHITE).size() < Board.calculateActivePieces(board.getGameBoard(), Alliance.BLACK).size()) {
                         text = "Чорні перемогли!";
-                    }
-                    else{
-                        System.out.println("It's a draw.");
+                    } else {
                         text = "Нічия!";
                     }
-                    //todo CHANGE SOMEHOW??
                     int returnValue = JOptionPane.showOptionDialog(null, text, "Перемога",
                             JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
-                    if(returnValue == 0){
+                    if (returnValue == 0) {
                         Table.get().restart();
-                    }
-                    else{
+                    } else {
                         System.exit(0);
                     }
-                    //System.exit(0);
-                    }
+                }
+            }
+            }
+            else if(moveHistory.getMoves().size() < 4){
+                final Move lastMove = moveHistory.getMoves().get(moveHistory.size() - 1);
+                final String moveText = lastMove.toString();
+                if (lastMove.getMovedPiece().getPieceAlliance().isWhite()) {
+                    this.model.setValueAt(moveText + calculateCheckAndCheckMateHash(board), currentRow, 0);
+                }
+                else if (lastMove.getMovedPiece().getPieceAlliance().isBlack()) {
+                    this.model.setValueAt(moveText + calculateCheckAndCheckMateHash(board), currentRow - 1, 1);
+                }
             }
 
         }
@@ -109,6 +121,20 @@ class GameHistoryPanel extends JPanel {
                 && lastMove_1.toString().equals(moves.get(moves.size()-6).toString())
                 && lastMove_2.toString().equals(moves.get(moves.size()-7).toString())
                 && lastMove_3.toString().equals(moves.get(moves.size()-8).toString());
+    }
+    /**check if one piece is repeated in a row
+     * @param moves - whole list of moves
+     * @return true if so*/
+    private boolean checkOnePieceRepeat(List<Move> moves){
+        Move lastMove = moves.get(moves.size()-1);
+        Move lastMove_1 = moves.get(moves.size()-2); // pre last move
+        Move lastMove_2 = moves.get(moves.size()-3); // pre pre last move
+        Move lastMove_3 = moves.get(moves.size()-4);// pre pre pre last move
+        if(lastMove == null || lastMove_1 == null
+            || (lastMove.toString().equals(lastMove_2.toString()))
+            || (lastMove_1.toString().equals(lastMove_3.toString())))
+            return true;
+        return false;
     }
 
     private static String calculateCheckAndCheckMateHash(final Board board) {

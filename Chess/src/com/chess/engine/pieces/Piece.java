@@ -80,6 +80,11 @@ public abstract class Piece {
             public boolean isRook() {
                 return false;
             }
+
+            @Override
+            public boolean isQueen() {
+                return false;
+            }
         },
         KNIGHT(300, "N") {
             @Override
@@ -89,6 +94,11 @@ public abstract class Piece {
 
             @Override
             public boolean isRook() {
+                return false;
+            }
+
+            @Override
+            public boolean isQueen() {
                 return false;
             }
         },
@@ -102,6 +112,11 @@ public abstract class Piece {
             public boolean isRook() {
                 return false;
             }
+
+            @Override
+            public boolean isQueen() {
+                return false;
+            }
         },
         ROOK(500, "R") {
             @Override
@@ -112,6 +127,11 @@ public abstract class Piece {
             @Override
             public boolean isRook() {
                 return true;
+            }
+
+            @Override
+            public boolean isQueen() {
+                return false;
             }
         },
         QUEEN(900, "Q") {
@@ -124,6 +144,11 @@ public abstract class Piece {
             public boolean isRook() {
                 return false;
             }
+
+            @Override
+            public boolean isQueen() {
+                return true;
+            }
         },
         KING(10000, "K") {
             @Override
@@ -133,6 +158,11 @@ public abstract class Piece {
 
             @Override
             public boolean isRook() {
+                return false;
+            }
+
+            @Override
+            public boolean isQueen() {
                 return false;
             }
         };
@@ -152,6 +182,7 @@ public abstract class Piece {
 
         public abstract boolean isKing();
         public abstract boolean isRook();
+        public abstract boolean isQueen();
 
         public int getPieceValue() {
             return this.pieceValue;

@@ -11,9 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
 
 public class TakenPiecesPanel extends JPanel {
@@ -22,15 +20,15 @@ public class TakenPiecesPanel extends JPanel {
     private final JPanel southPanel;
 
     private static final Color PANEL_COLOR = Color.decode("0xFDFE6");
-    private static final Dimension TAKEN_PIECES_PANEL_DIMENSION = new Dimension(40,80);
-    private static final EtchedBorder PANEL_BORDER = new EtchedBorder();
+    private static final Dimension TAKEN_PIECES_PANEL_DIMENSION = new Dimension(50,90);
+    private static final EtchedBorder PANEL_BORDER = new EtchedBorder(EtchedBorder.RAISED);
 
     public TakenPiecesPanel() {
         super(new BorderLayout());
         setBackground(Color.decode("0xFDF5E6"));
         setBorder(PANEL_BORDER);
-        this.northPanel = new JPanel(new GridLayout(8, 2));
-        this.southPanel = new JPanel(new GridLayout(8, 2));
+        this.northPanel = new JPanel(new GridLayout(13, 1));
+            this.southPanel = new JPanel(new GridLayout(13, 1));
         this.northPanel.setBackground(PANEL_COLOR);
         this.southPanel.setBackground(PANEL_COLOR);
         add(this.northPanel, BorderLayout.NORTH);
@@ -47,13 +45,15 @@ public class TakenPiecesPanel extends JPanel {
 
         for(final Move move : moveLog.getMoves()) {
             if(move.isAttack()) {
-                final Piece takenPiece = move.getAttackedPiece();
-                if(takenPiece.getPieceAllegiance().isWhite()) {
-                    whiteTakenPieces.add(takenPiece);
-                } else if(takenPiece.getPieceAllegiance().isBlack()){
-                    blackTakenPieces.add(takenPiece);
-                } else {
-                    throw new RuntimeException("Should not reach here!");
+                if(!checkMoveRepeat(moveLog.getMoves())) {
+                    final Piece takenPiece = move.getAttackedPiece();
+                    if (takenPiece.getPieceAllegiance().isWhite()) {
+                        whiteTakenPieces.add(takenPiece);
+                    } else if (takenPiece.getPieceAllegiance().isBlack()) {
+                        blackTakenPieces.add(takenPiece);
+                    } else {
+                        throw new RuntimeException("Should not reach here!");
+                    }
                 }
             }
         }
@@ -103,5 +103,24 @@ public class TakenPiecesPanel extends JPanel {
         }
 
         validate();
+    }
+
+
+    /**check if one piece is repeated in a row
+     * @param moves - whole list of moves
+     * @return true if so*/
+    private boolean checkMoveRepeat(List<Move> moves) {
+        if(moves.size() >= 4) {
+            Move lastMove = moves.get(moves.size() - 1);
+            Move lastMove_1 = moves.get(moves.size() - 2); // pre last move
+            Move lastMove_2 = moves.get(moves.size() - 3); // pre pre last move
+            Move lastMove_3 = moves.get(moves.size() - 4);// pre pre pre last move
+            if (lastMove == null || lastMove_1 == null
+                    || (lastMove.toString().equals(lastMove_2.toString()))
+                    || (lastMove_1.toString().equals(lastMove_3.toString())))
+                return true;
+            return false;
+        }
+        return false;
     }
 }
