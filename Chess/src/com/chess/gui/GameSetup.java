@@ -25,8 +25,8 @@ class GameSetup extends JDialog {
     private PlayerType blackPlayerType;
     private JSpinner searchDepthSpinner;
 
-    private static final String HUMAN_TEXT = "Human";
-    private static final String COMPUTER_TEXT = "Computer";
+    private static final String HUMAN_TEXT = "Людина";
+    private static final String COMPUTER_TEXT = "Комп'ютер";
 
     GameSetup(final JFrame frame,
               final boolean modal) {
@@ -48,18 +48,19 @@ class GameSetup extends JDialog {
         blackHumanButton.setSelected(true);
 
         getContentPane().add(myPanel);
-        myPanel.add(new JLabel("White"));
+        myPanel.add(new JLabel("Білі"));
         myPanel.add(whiteHumanButton);
         myPanel.add(whiteComputerButton);
-        myPanel.add(new JLabel("Black"));
+        myPanel.add(new JLabel("Чорні"));
         myPanel.add(blackHumanButton);
         myPanel.add(blackComputerButton);
 
-        myPanel.add(new JLabel("Search"));
-        this.searchDepthSpinner = addLabeledSpinner(myPanel, "Search Depth", new SpinnerNumberModel(6, 0, Integer.MAX_VALUE, 1));
+        myPanel.add(new JLabel("Складність"));
+        this.searchDepthSpinner = addLabeledSpinner(myPanel, "Складність", new SpinnerNumberModel(3, 0, Integer.MAX_VALUE, 1));
 
-        final JButton cancelButton = new JButton("Cancel");
-        final JButton okButton = new JButton("OK");
+        final JButton cancelButton = new JButton("Вийти");
+        final JButton okButton = new JButton("Застосувати");
+        final JButton restartButton = new JButton("Перезапустити");
 
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -76,8 +77,16 @@ class GameSetup extends JDialog {
             }
         });
 
+        restartButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Table.get().restart();
+                GameSetup.this.setVisible(false);
+            }
+        });
+
         myPanel.add(cancelButton);
         myPanel.add(okButton);
+        myPanel.add(restartButton);
 
         setLocationRelativeTo(frame);
         pack();

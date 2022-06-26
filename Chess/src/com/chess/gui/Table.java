@@ -43,6 +43,8 @@ public class Table extends Observable {
     private Piece humanMovedPiece;
     private BoardDirection boardDirection;
 
+    private static int returnValue = -1;
+
     private Move computerMove;
 
     private boolean highlighLegalMoves;
@@ -61,6 +63,10 @@ public class Table extends Observable {
     enum PlayerType{
         HUMAN,
         COMPUTER
+    }
+
+    public int getReturnValue() {
+        return returnValue;
     }
 
     private Table() {
@@ -86,6 +92,7 @@ public class Table extends Observable {
     public Table restart(){
         this.gameFrame.dispose();
         INSTANCE = new Table();
+        returnValue=-1;
         return INSTANCE;
     }
     public static Table get(){
@@ -107,8 +114,8 @@ public class Table extends Observable {
     }
 
     private JMenu createOptionsMenu(){
-        final JMenu optionsMenu = new JMenu("Options");
-        final JMenuItem setupGameMenuItem = new JMenuItem("Setup Game");
+        final JMenu optionsMenu = new JMenu("Налаштування");
+        final JMenuItem setupGameMenuItem = new JMenuItem("Налаштувати гравців");
 
         setupGameMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -142,7 +149,7 @@ public class Table extends Observable {
                 thinkTank.execute();
             }
 
-            if(Table.get().getGameBoard().currentPlayer().isInCheckMate() || Table.get().getGameBoard().currentPlayer().isInStaleMate()){
+            if((Table.get().getGameBoard().currentPlayer().isInCheckMate() || Table.get().getGameBoard().currentPlayer().isInStaleMate()) && returnValue==-1){
                 String text = "";
                 switch(Table.get().getGameBoard().currentPlayer().getAlliance()){
                     case WHITE:
@@ -162,7 +169,7 @@ public class Table extends Observable {
 
         private void showButton(String text) {
             String[] buttons = { "Нова гра", "Вийти" };
-            int returnValue = JOptionPane.showOptionDialog(null, text, "Перемога!",
+            returnValue = JOptionPane.showOptionDialog(null, text, "Перемога!",
                     JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
             System.out.println(returnValue);
             if(returnValue == 0){
@@ -251,9 +258,9 @@ public class Table extends Observable {
         final JMenuBar tableMenuBar = new JMenuBar();
 
         //додає ячейку до верхнього меню
-        tableMenuBar.add(createFileMenu());
-        tableMenuBar.add(createPreferencesMenu());
         tableMenuBar.add(createOptionsMenu());
+        tableMenuBar.add(createPreferencesMenu());
+        tableMenuBar.add(createFileMenu());
         return tableMenuBar;
     }
 
@@ -343,21 +350,21 @@ public class Table extends Observable {
                             if(transition.getMoveStatus().isDone()){
                                 chessBoard = transition.getTransitionBoard();
                                 moveLog.addMove(move);
-                                if(chessBoard.currentPlayer().isInCheckMate() || chessBoard.currentPlayer().isInStaleMate()){
+                                if((chessBoard.currentPlayer().isInCheckMate() || chessBoard.currentPlayer().isInStaleMate()) && returnValue==-1){
                                     //JOptionPane.showMessageDialog(null, chessBoard.currentPlayer().getAlliance()+" is in checkmate!");
                                     String text = "";
                                     switch(chessBoard.currentPlayer().getAlliance()){
                                         case WHITE:
-                                            text = "Білі перемогли!";
+                                            text = "Чорні перемогли!";
                                             break;
                                         case BLACK:
-                                            text = "Чорні перемогли!";
+                                            text = "Білі перемогли!";
                                             break;
                                     }
 
                                     String[] buttons = { "Нова гра", "Вийти" };
-                                    int returnValue = JOptionPane.showOptionDialog(null, text, "Перемога!",
-                                            JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, null, buttons, buttons[0]);
+                                    returnValue = JOptionPane.showOptionDialog(null, text, "Перемога!",
+                                            JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION, createFileMenu().getDisabledSelectedIcon(), buttons, buttons[0]);
                                     System.out.println(returnValue);
                                     if(returnValue == 0){
                                         restart();
@@ -488,18 +495,15 @@ public class Table extends Observable {
 
     //Створює ячейку, яка розкривається
     private JMenu createFileMenu(){
-        final JMenu fileMenu = new JMenu("File");
-
-        final JMenuItem openPGN = new JMenuItem("Load PGN file");
-        openPGN.addActionListener(new ActionListener() {
+        final JMenu fileMenu = new JMenu("Вийти");
+        fileMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("open pgn file");
+                System.exit(0);
             }
         });
-        fileMenu.add(openPGN);
 
-        final JMenuItem exitMenuItem = new JMenuItem("Exit");
+        final JMenuItem exitMenuItem = new JMenuItem("Вийти");
         exitMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -512,8 +516,8 @@ public class Table extends Observable {
     }
 
     private JMenu createPreferencesMenu() {
-        final JMenu preferencesMenu = new JMenu("Preferences");
-        final JMenuItem flipBoardMenuItem = new JMenuItem("Flip Board");
+        final JMenu preferencesMenu = new JMenu("Огляд");
+        final JMenuItem flipBoardMenuItem = new JMenuItem("Перевернути дошку");
         flipBoardMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
