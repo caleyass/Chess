@@ -54,8 +54,8 @@ public class Table extends Observable {
     private static final Dimension TILE_PANEL_DIMENSION = new Dimension(100, 100);
     private static String defaultPieceImagesPath = "art/simple/";
 
-    private final Color lightTileColor = Color.decode("#FFFACD");
-    private final Color darkTileColor = Color.decode("#593E1A");
+    private final Color lightTileColor = Color.decode("#FCEB72");
+    private final Color darkTileColor = Color.decode("#86A1FC");
 
     private static Table INSTANCE = new Table();
 
