@@ -6,6 +6,9 @@ import com.chess.engine.board.Move;
 
 import java.util.Collection;
 
+/**
+ * Parent of all pieces
+ */
 public abstract class Piece {
 
     protected final int piecePosition;

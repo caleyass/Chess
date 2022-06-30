@@ -1,8 +1,10 @@
 package com.chess;
 
-import com.chess.engine.board.Board;
 import com.chess.gui.Table;
 
+/**
+ * Class that should be executed to start a game
+ */
 public class JChess {
     /**
      * @param args string[] args

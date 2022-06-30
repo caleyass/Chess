@@ -5,6 +5,9 @@ import com.chess.engine.board.Move;
 
 import java.util.concurrent.Future;
 
+/**
+ * Transition of move
+ */
 public class MoveTransition {
     private final Board fromBoard;
     private final Board toBoard;

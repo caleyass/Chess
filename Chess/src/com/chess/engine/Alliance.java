@@ -5,6 +5,9 @@ import com.chess.engine.player.BlackPlayer;
 import com.chess.engine.player.Player;
 import com.chess.engine.player.WhitePlayer;
 
+/**
+ * White or black alliance
+ */
 public enum Alliance {
     /**
      * methods for a white alliance

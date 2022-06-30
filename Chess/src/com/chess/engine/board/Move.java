@@ -5,6 +5,9 @@ import com.chess.engine.pieces.Pawn;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.pieces.Rook;
 
+/**
+ * Move of a piece
+ */
 public abstract class Move {
     protected final Board board;
     protected final Piece movedPiece;
@@ -114,6 +117,9 @@ public abstract class Move {
           return null;
     }
 
+    /**
+     * Major attack move
+     */
     public static class MajorAttackMove extends AttackMove {
         /**
          * @param board  board
@@ -136,6 +142,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Major move
+     */
     public static final class MajorMove extends Move{
         /**
          * @param board  board
@@ -157,6 +166,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Attack move
+     */
     public static class AttackMove extends Move{
          final Piece attackedPiece;
 
@@ -199,7 +211,9 @@ public abstract class Move {
     }
 
 
-
+    /**
+     * Pawn move
+     */
     public static final class PawnMove extends Move{
         /**
          * @param board board
@@ -219,6 +233,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Pawn attack move
+     */
     public static class PawnAttackMove extends AttackMove{
         /**
          * @param board board
@@ -243,6 +260,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Pawn en passant attack move
+     */
     public static final class PawnEnPassantAttackMove extends PawnAttackMove{
         /**
          * @param board board
@@ -282,6 +302,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Pawn promotion to queen
+     */
     public static class PawnPromotion extends Move{
 
           final Move decoratedMove;
@@ -338,6 +361,9 @@ public abstract class Move {
           }
     }
 
+    /**
+     * Pawn long move
+     */
     public static final class PawnJump extends Move{
         /**
          * @param board board
@@ -371,6 +397,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Castle move
+     */
     static class CastleMove extends Move{
           protected final Rook castleRook;
           protected final int castleRookStart;
@@ -444,6 +473,9 @@ public abstract class Move {
 
     }
 
+    /**
+     * King side castle move with rook
+     */
     public static final class KingSideCastleMove extends CastleMove{
         /**
          * @param board board
@@ -478,6 +510,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Queen side castle move with rook
+     */
     public static final class QueenSideCastleMove extends CastleMove{
         /**
          * @param board board
@@ -513,6 +548,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Null move
+     */
     public static final class NullMove extends Move{
         public NullMove() {
             super(null,  -1);
@@ -530,6 +568,9 @@ public abstract class Move {
         }
     }
 
+    /**
+     * Finds a move by coordinates
+     */
     public static class MoveFactory {
 
         private static final Move NULL_MOVE = new NullMove();

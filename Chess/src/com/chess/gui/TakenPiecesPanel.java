@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Taken pieces panel on the left of board
+ */
 public class TakenPiecesPanel extends JPanel {
 
     private final JPanel northPanel;

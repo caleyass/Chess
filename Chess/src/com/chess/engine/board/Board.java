@@ -9,7 +9,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
 import java.util.*;
-
+/**
+ * Chess board that contains pieces
+ * */
 public class Board {
 
     private final List<Tile> gameBoard;

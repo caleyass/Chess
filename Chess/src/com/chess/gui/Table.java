@@ -26,6 +26,9 @@ import java.util.concurrent.ExecutionException;
 
 import static javax.swing.SwingUtilities.*;
 
+/**
+ * Main GUI of chess table
+ */
 public class Table extends Observable {
     private final JFrame gameFrame;
     private final GameHistoryPanel gameHistoryPanel;
@@ -299,6 +302,9 @@ public class Table extends Observable {
         return tableMenuBar;
     }
 
+    /**
+     * Contains list of all moves
+     */
     public static class MoveLog{
         private final List<Move> moves;
 
@@ -325,6 +331,9 @@ public class Table extends Observable {
         }
     }
 
+    /**
+     * Creates tiles on board
+     */
     private class BoardPanel extends JPanel{
         final List<TilePanel> boardTiles;
         BoardPanel(){
@@ -350,6 +359,9 @@ public class Table extends Observable {
         }
     }
 
+    /**
+     * Logic of tile
+     */
     private class TilePanel extends JPanel{
         private final int tileID;
         TilePanel(final BoardPanel boardPanel, final int tileID){
@@ -454,6 +466,10 @@ public class Table extends Observable {
             validate();
         }
 
+        /**
+         * @param board board
+         * draws a tile on board
+         */
         public void drawTile(final Board board){
             assignTileColor();
             assignTilePieceIcon(board);
@@ -462,6 +478,9 @@ public class Table extends Observable {
             repaint();
         }
 
+        /**
+         * @param board board
+         */
         private void assignTilePieceIcon(final Board board){
             this.removeAll();
             if(board.getTile(this.tileID).isTileOccupied()){
@@ -477,6 +496,9 @@ public class Table extends Observable {
 
         }
 
+        /**
+         * @param board board
+         */
         private void highlightLegals(final Board board){
                 for(final Move move: pieceLegalMoves(board)){
 
@@ -496,6 +518,11 @@ public class Table extends Observable {
                 }
 
         }
+
+        /**
+         * @param move move
+         * @return if current player is in check
+         */
         private boolean allowedMove(final Move move){
             if (!Table.get().getGameBoard().currentPlayer().getLegalMoves().contains(move)) {
                 return false;
@@ -505,6 +532,11 @@ public class Table extends Observable {
             return transitionedBoard.currentPlayer().getOpponent().isInCheck();
 
         }
+
+        /**
+         * @param board board
+         * @return collection of legal moves
+         */
         private Collection<Move> pieceLegalMoves(final Board board) {
             if(humanMovedPiece != null && humanMovedPiece.getPieceAlliance() == board.currentPlayer().getAlliance()){
                 return humanMovedPiece.calculateLegalMoves(board);
@@ -513,6 +545,9 @@ public class Table extends Observable {
 
         }
 
+        /**
+         * set colors of tiles
+         */
         private void assignTileColor() {
             if(BoardUtils.EIGHTH_RANK[this.tileID]
                     || BoardUtils.SIXTH_RANK[this.tileID]
@@ -570,6 +605,9 @@ public class Table extends Observable {
         return preferencesMenu;
     }
 
+    /**
+     * Direction of board : NORMAL, FLIPPED
+     */
     public enum BoardDirection{
         NORMAL{
             @Override

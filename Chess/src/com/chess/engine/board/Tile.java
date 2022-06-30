@@ -7,6 +7,9 @@ import com.google.common.collect.ImmutableMap;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Tole on the board
+ */
 public abstract class Tile {
     protected final int tileCoordinate;
 
@@ -49,6 +52,9 @@ public abstract class Tile {
         return this.tileCoordinate;
     }
 
+    /**
+     * Empty tile
+     */
     public static final class EmptyTile extends Tile{
         /**
          * @param coordinate coordinate
@@ -73,6 +79,9 @@ public abstract class Tile {
         }
     }
 
+    /**
+     * Occupied tile
+     */
     public static final class OccupiedTile extends Tile{
         private final Piece pieceOnTile;
 

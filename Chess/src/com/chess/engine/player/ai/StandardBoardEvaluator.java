@@ -4,6 +4,9 @@ import com.chess.engine.board.Board;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.player.Player;
 
+/**
+ * Contains special bonuses for AI
+ */
 public final class StandardBoardEvaluator implements BoardEvaluator {
     private static final int CHECK_BONUS = 50;
     private static final int CHECKMATE_BONUS = 10000;

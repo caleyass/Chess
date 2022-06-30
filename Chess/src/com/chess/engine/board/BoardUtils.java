@@ -4,6 +4,9 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.*;
 
+/**
+ * Contains useful methods for board
+ */
 public class BoardUtils {
 
     public static final boolean[] FIRST_COLUMN = initColumn(0);

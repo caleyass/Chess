@@ -19,6 +19,9 @@ import com.chess.engine.Alliance;
 import com.chess.engine.player.Player;
 import com.chess.gui.Table.PlayerType;
 
+/**
+ * Panel with game setups
+ */
 class GameSetup extends JDialog {
 
     private PlayerType whitePlayerType;

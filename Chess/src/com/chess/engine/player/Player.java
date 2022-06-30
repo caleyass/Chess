@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Parent of black and white players
+ */
 public abstract class Player {
     protected final Board board;
     protected final King playerKing;

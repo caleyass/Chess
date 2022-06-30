@@ -1,5 +1,8 @@
 package com.chess.engine.player;
 
+/**
+ * Move statuses: DONE, ILLEGAL_MOVE, LEAVES_PLAYER_IN_CHECK
+ */
 public enum MoveStatus {
     DONE {
         @Override

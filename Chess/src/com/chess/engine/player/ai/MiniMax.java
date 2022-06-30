@@ -12,6 +12,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static com.chess.engine.board.Move.*;
 
+/**
+ * Implements mini max AI thinking
+ */
 public final class MiniMax implements MoveStrategy {
 
     private final BoardEvaluator evaluator;

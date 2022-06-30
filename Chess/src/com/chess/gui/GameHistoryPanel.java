@@ -12,6 +12,9 @@ import com.chess.engine.board.Board;
 import com.chess.engine.board.Move;
 import com.chess.gui.Table.MoveLog;
 
+/**
+ * Right panel with game history
+ */
 class GameHistoryPanel extends JPanel {
 
     private final DataModel model;
@@ -157,6 +160,9 @@ class GameHistoryPanel extends JPanel {
         return "";
     }
 
+    /**
+     * Indicates row
+     */
     private static class Row {
 
         private String whiteMove;
@@ -180,6 +186,9 @@ class GameHistoryPanel extends JPanel {
 
     }
 
+    /**
+     * Data table model
+     */
     private static class DataModel extends DefaultTableModel {
 
         private final List<Row> values;
