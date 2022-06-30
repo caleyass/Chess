@@ -14,6 +14,11 @@ import java.util.List;
 
 public class WhitePlayer extends Player {
 
+    /**
+     * @param board board
+     * @param whiteStandardLegalMoves whiteStandardLegalMoves
+     * @param blackStandardLegalMoves blackStandardLegalMoves
+     */
     public WhitePlayer(final Board board, final Collection<Move> whiteStandardLegalMoves, final Collection<Move> blackStandardLegalMoves) {
 
         super(board, whiteStandardLegalMoves, blackStandardLegalMoves);

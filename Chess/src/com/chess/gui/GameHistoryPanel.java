@@ -18,6 +18,9 @@ class GameHistoryPanel extends JPanel {
     private final JScrollPane scrollPane;
     private static final Dimension HISTORY_PANEL_DIMENSION = new Dimension(100, 40);
 
+    /**
+     * create a base of the game history panel
+     */
     GameHistoryPanel() {
         this.setLayout(new BorderLayout());
         this.model = new DataModel();
@@ -30,6 +33,10 @@ class GameHistoryPanel extends JPanel {
         this.setVisible(true);
     }
 
+    /**
+     * @param board board
+     * @param moveHistory moveHistory
+     */
     void redo(final Board board,
               final MoveLog moveHistory) {
         int currentRow = 0;
@@ -137,6 +144,10 @@ class GameHistoryPanel extends JPanel {
         return false;
     }
 
+    /**
+     * @param board board
+     * @return whether a king is in check mate or in check or not
+     */
     private static String calculateCheckAndCheckMateHash(final Board board) {
         if(board.currentPlayer().isInCheckMate()) {
             return "#";
@@ -150,9 +161,6 @@ class GameHistoryPanel extends JPanel {
 
         private String whiteMove;
         private String blackMove;
-
-        Row() {
-        }
 
         public String getWhiteMove() {
             return this.whiteMove;
@@ -181,6 +189,9 @@ class GameHistoryPanel extends JPanel {
             this.values = new ArrayList<>();
         }
 
+        /**
+         * sets row count to 0
+         */
         public void clear() {
             this.values.clear();
             setRowCount(0);

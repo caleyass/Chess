@@ -28,14 +28,16 @@ public final class MiniMax implements MoveStrategy {
     }
 
 
+    /**
+     * @param board board
+     * @return best move computed by minimax algorithm
+     */
     public Move execute(final Board board) {
-        final long startTime = System.currentTimeMillis();
         Move bestMove = null;
         int highestSeenValue = Integer.MIN_VALUE;
         int lowestSeenValue = Integer.MAX_VALUE;
         int currentValue;
         System.out.println(board.currentPlayer() + " THINKING with depth = " +this.searchDepth);
-        final int numMoves = board.currentPlayer().getLegalMoves().size();
         for (final Move move : board.currentPlayer().getLegalMoves()) {
             final MoveTransition moveTransition = board.currentPlayer().makeMove(move);
             if (moveTransition.getMoveStatus().isDone()) {
@@ -62,6 +64,11 @@ public final class MiniMax implements MoveStrategy {
         return bestMove;
     }
 
+    /**
+     * @param board board
+     * @param depth depth of thinking
+     * @return lowest seen value
+     */
     private int min(final Board board,
                     final int depth) {
         if(depth == 0) {
@@ -82,7 +89,11 @@ public final class MiniMax implements MoveStrategy {
         }
         return lowestSeenValue;
     }
-
+    /**
+     * @param board board
+     * @param depth depth of thinking
+     * @return highest seen value
+     */
     private int max(final Board board,
                     final int depth) {
         if(depth == 0) {
@@ -104,6 +115,10 @@ public final class MiniMax implements MoveStrategy {
         return highestSeenValue;
     }
 
+    /**
+     * @param board board
+     * @return if it is EndGameScenario
+     */
     private static boolean isEndGameScenario(final Board board) {
         return board.currentPlayer().isInCheckMate() || board.currentPlayer().isInStaleMate();
     }

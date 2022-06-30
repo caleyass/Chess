@@ -20,11 +20,12 @@ public class King extends Piece{
     /**The coordinates along which the horse moves */
     private static final int[] CANDIDATE_MOVE_COORDINATE = { -9, -8, -7, -1, 1, 7, 8, 9 };
 
+    /**
+     * @param pieceAlliance  pieceAlliance
+     * @param piecePosition piecePosition
+     */
     public King( final Alliance pieceAlliance, final int piecePosition) {
         super(piecePosition, pieceAlliance, PieceType.KING, true);
-    }
-    public King( final Alliance pieceAlliance, final int piecePosition, final boolean isFirstMove) {
-        super(piecePosition, pieceAlliance, PieceType.KING, isFirstMove);
     }
     @Override
     public Collection<Move> calculateLegalMoves(final Board board) {
@@ -63,10 +64,19 @@ public class King extends Piece{
     public String toString() {
         return PieceType.KING.toString();
     }
-
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is a first column
+     */
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset==-9 || candidateOffset==-1 || candidateOffset==7);
     }
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is an eight column
+     */
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.EIGHT_COLUMN[currentPosition] && (candidateOffset==-7 || candidateOffset==1 || candidateOffset==9 );
     }

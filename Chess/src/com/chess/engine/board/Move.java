@@ -16,6 +16,11 @@ public abstract class Move {
     }
     public static final Move NULL_MOVE = new NullMove();
 
+    /**
+     * @param board board
+     * @param movedPiece movedPiece
+     * @param destinationCoordinate destinationCoordinate
+     */
       private Move(final Board board, final Piece movedPiece, final int destinationCoordinate){
         this.board = board;
         this.movedPiece = movedPiece;
@@ -23,6 +28,10 @@ public abstract class Move {
         this.isFirstMove = movedPiece.isFirstMove();
       }
 
+    /**
+     * @param board board
+     * @param destinationCoordinate destinationCoordinate
+     */
         private Move(final Board board, final int destinationCoordinate){
             this.board = board;
             this.movedPiece = null;
@@ -38,6 +47,9 @@ public abstract class Move {
         return this.destinationCoordinate;
     }
 
+    /**
+     * @return edited board
+     */
     public Board execute() {
         final Builder builder = new Builder();
         for(final Piece piece : this.board.currentPlayer().getActivePieces()) {
@@ -54,6 +66,10 @@ public abstract class Move {
         builder.setMoveMaker(this.board.currentPlayer().getOpponent().getAlliance());
         return builder.build();
     }
+
+    /**
+     * @return hash code
+     */
     @Override
     public int hashCode(){
         final int prime = 31;
@@ -64,6 +80,10 @@ public abstract class Move {
         return result;
     }
 
+    /**
+     * @param other other object
+     * @return if object equals
+     */
     @Override
     public boolean equals(final Object other){
         if(this == other){
@@ -95,9 +115,16 @@ public abstract class Move {
     }
 
     public static class MajorAttackMove extends AttackMove {
+        /**
+         * @param board  board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         * @param attackedPiece attackedPiece
+         */
         public MajorAttackMove(final Board board, final Piece movedPiece, final int destinationCoordinate, final Piece attackedPiece) {
             super(board, movedPiece, destinationCoordinate, attackedPiece);
         }
+
         @Override
         public boolean equals(final Object other){
             return this == other || other instanceof MajorAttackMove && super.equals(other);
@@ -110,6 +137,11 @@ public abstract class Move {
     }
 
     public static final class MajorMove extends Move{
+        /**
+         * @param board  board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         */
          public MajorMove(final Board board, final Piece movedPiece, final int destinationCoordinate) {
             super(board, movedPiece, destinationCoordinate);
         }
@@ -127,6 +159,13 @@ public abstract class Move {
 
     public static class AttackMove extends Move{
          final Piece attackedPiece;
+
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         * @param attackedPiece attackedPiece
+         */
         public AttackMove(final Board board,
                           final Piece movedPiece,
                           final int destinationCoordinate,
@@ -162,6 +201,11 @@ public abstract class Move {
 
 
     public static final class PawnMove extends Move{
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         */
         public PawnMove(final Board board, final Piece movedPiece, final int destinationCoordinate) {
             super(board, movedPiece, destinationCoordinate);
         }
@@ -176,6 +220,12 @@ public abstract class Move {
     }
 
     public static class PawnAttackMove extends AttackMove{
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         * @param attackedPiece attackedPiece
+         */
         public PawnAttackMove(final Board board,
                               final Piece movedPiece,
                               final int destinationCoordinate,
@@ -194,6 +244,12 @@ public abstract class Move {
     }
 
     public static final class PawnEnPassantAttackMove extends PawnAttackMove{
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         * @param attackedPiece attackedPiece
+         */
         public PawnEnPassantAttackMove(final Board board,
                               final Piece movedPiece,
                               final int destinationCoordinate,
@@ -231,6 +287,9 @@ public abstract class Move {
           final Move decoratedMove;
           final Pawn promotedPawn;
 
+        /**
+         * @param decoratedMove move of pawn
+         */
           public PawnPromotion(final Move decoratedMove){
               super(decoratedMove.getBoard(), decoratedMove.getMovedPiece(), decoratedMove.getDestinationCoordinate());
               this.decoratedMove = decoratedMove;
@@ -280,6 +339,11 @@ public abstract class Move {
     }
 
     public static final class PawnJump extends Move{
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         */
         public PawnJump(final Board board, final Piece movedPiece, final int destinationCoordinate) {
             super(board, movedPiece, destinationCoordinate);
         }
@@ -312,6 +376,14 @@ public abstract class Move {
           protected final int castleRookStart;
           protected final int castleRookDestination;
 
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         * @param castleRook castleRook
+         * @param castleRookStart castleRookStart
+         * @param castleRookDestination castleRookDestination
+         */
         public CastleMove(final Board board,
                           final Piece movedPiece,
                           final int destinationCoordinate,
@@ -373,6 +445,14 @@ public abstract class Move {
     }
 
     public static final class KingSideCastleMove extends CastleMove{
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         * @param castleRook castleRook
+         * @param castleRookStart castleRookStart
+         * @param castleRookDestination castleRookDestination
+         */
         public KingSideCastleMove(final Board board,
                                   final Piece movedPiece,
                                   final int destinationCoordinate,
@@ -399,6 +479,14 @@ public abstract class Move {
     }
 
     public static final class QueenSideCastleMove extends CastleMove{
+        /**
+         * @param board board
+         * @param movedPiece movedPiece
+         * @param destinationCoordinate destinationCoordinate
+         * @param castleRook castleRook
+         * @param castleRookStart castleRookStart
+         * @param castleRookDestination castleRookDestination
+         */
         public QueenSideCastleMove(final Board board,
                                   final Piece movedPiece,
                                   final int destinationCoordinate,

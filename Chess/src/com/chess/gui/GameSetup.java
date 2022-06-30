@@ -28,6 +28,10 @@ class GameSetup extends JDialog {
     private static final String HUMAN_TEXT = "Людина";
     private static final String COMPUTER_TEXT = "Комп'ютер";
 
+    /**
+     * @param frame param for JDialog
+     * @param modal param for JDialog
+     */
     GameSetup(final JFrame frame,
               final boolean modal) {
         super(frame, modal);
@@ -98,6 +102,10 @@ class GameSetup extends JDialog {
         repaint();
     }
 
+    /**
+     * @param player player
+     * @return if player is AI
+     */
     boolean isAIPlayer(final Player player) {
         if(player.getAlliance() == Alliance.WHITE) {
             return getWhitePlayerType() == PlayerType.COMPUTER;
@@ -113,6 +121,12 @@ class GameSetup extends JDialog {
         return this.blackPlayerType;
     }
 
+    /**
+     * @param c container
+     * @param label label
+     * @param model spinner model
+     * @return
+     */
     private static JSpinner addLabeledSpinner(Container c, String label, SpinnerModel model) {
         final JLabel l = new JLabel(label);
         c.add(l);

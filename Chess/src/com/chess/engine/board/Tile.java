@@ -12,6 +12,9 @@ public abstract class Tile {
 
     private static final Map<Integer, EmptyTile> EMPTY_TILES_CACHE = createAllPosibleEmptyTiles();
 
+    /**
+     * @return emptyTileMap
+     */
     private static Map<Integer, EmptyTile> createAllPosibleEmptyTiles() {
         final Map<Integer, EmptyTile> emptyTileMap = new HashMap<>();
 
@@ -22,10 +25,18 @@ public abstract class Tile {
         return ImmutableMap.copyOf(emptyTileMap);
     }
 
+    /**
+     * @param tileCoordinate  tileCoordinate
+     * @param piece piece
+     * @return occupied or empty tile
+     */
     public static Tile createTile(final int tileCoordinate, final Piece piece){
         return piece!= null ? new OccupiedTile(tileCoordinate, piece) : EMPTY_TILES_CACHE.get(tileCoordinate);
     }
 
+    /**
+     * @param tileCoordinate tileCoordinate
+     */
     private Tile(final int tileCoordinate){
         this.tileCoordinate = tileCoordinate;
     }
@@ -39,6 +50,9 @@ public abstract class Tile {
     }
 
     public static final class EmptyTile extends Tile{
+        /**
+         * @param coordinate coordinate
+         */
         public EmptyTile(int coordinate){
             super(coordinate);
         }
@@ -62,6 +76,10 @@ public abstract class Tile {
     public static final class OccupiedTile extends Tile{
         private final Piece pieceOnTile;
 
+        /**
+         * @param coordinate coordinate
+         * @param pieceOnTile pieceOnTile
+         */
         public OccupiedTile(int coordinate, final Piece pieceOnTile){
             super(coordinate);
             this.pieceOnTile = pieceOnTile;

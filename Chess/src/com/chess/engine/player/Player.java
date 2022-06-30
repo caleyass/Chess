@@ -18,6 +18,11 @@ public abstract class Player {
     protected final Collection<Move> legalMoves;
     private final boolean isInCheck;
 
+    /**
+     * @param board board
+     * @param legalMoves legalMoves
+     * @param opponentMoves opponentMoves
+     */
     protected Player(Board board, Collection<Move> legalMoves, Collection<Move> opponentMoves) {
         this.board = board;
         this.playerKing = establishKing();
@@ -25,6 +30,11 @@ public abstract class Player {
         this.legalMoves = ImmutableList.copyOf(Iterables.concat(legalMoves, calculateKingCastles(legalMoves, opponentMoves)));
     }
 
+    /**
+     * @param piecePosition piecePosition
+     * @param opponentMoves opponentMoves
+     * @return
+     */
     protected static Collection<Move> calculateAttacksOnTile(Integer piecePosition, Collection<Move> opponentMoves) {
         final List<Move> attackMoves = new ArrayList<>();
         for (Move move : opponentMoves) {
@@ -35,6 +45,9 @@ public abstract class Player {
         return ImmutableList.copyOf(attackMoves);
     }
 
+    /**
+     * @return king piece
+     */
     private King establishKing() {
         for(final Piece piece : getActivePieces()) {
             if(piece.getPieceType().isKing()) {
@@ -43,16 +56,16 @@ public abstract class Player {
         }
         throw new RuntimeException("Should not be able to get here, not a valid board!");
     }
-
-    public boolean isMoveLegal(final Move move) {
-        return this.legalMoves.contains(move);
-    }
-
+    /**
+     * @return isInCheck
+     */
     public boolean isInCheck() {
         return this.isInCheck;
     }
 
-    //TODO: implement this
+    /**
+     * @return isInCheckMate
+     */
     public boolean isInCheckMate() {
         return this.isInCheck && !hasEscapeMoves();
     }
@@ -67,14 +80,24 @@ public abstract class Player {
         return false;
     }
 
+    /**
+     * @return isInStaleMate
+     */
     public boolean isInStaleMate() {
         return !this.isInCheck && !hasEscapeMoves();
     }
 
+    /**
+     * @return isCastled
+     */
     public boolean isCastled() {
         return false;
     }
 
+    /**
+     * @param move move
+     * @return make move
+     */
     public MoveTransition makeMove(final Move move) {
         if (!this.legalMoves.contains(move)) {
             return new MoveTransition(this.board, this.board, move, MoveStatus.ILLEGAL_MOVE);
@@ -89,10 +112,6 @@ public abstract class Player {
 
     public Collection<Move> getLegalMoves() {
         return this.legalMoves;
-    }
-
-    private Piece getPlayerKing() {
-        return this.playerKing;
     }
 
     public abstract Collection<Piece> getActivePieces();

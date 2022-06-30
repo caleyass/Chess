@@ -22,7 +22,7 @@ public class Board {
 
     private final Pawn enPassantPawn;
 
-    /**
+    /** @param builder builder
      * */
     private Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
@@ -57,6 +57,10 @@ public class Board {
     }
 
 
+    /**
+     * @param pieces - pieces on board
+     * @return legalMoves
+     */
     private Collection<Move> calculateLegalMoves(Collection<Piece> pieces) {
         final List<Move> legalMoves = new ArrayList<>();
         for (Piece piece : pieces) {
@@ -65,6 +69,11 @@ public class Board {
         return legalMoves;
     }
 
+    /**
+     * @param gameBoard gameBoard
+     * @param alliance alliance
+     * @return activePieces
+     */
     public static Collection<Piece> calculateActivePieces(final List<Tile> gameBoard,final Alliance alliance) {
         final List<Piece> activePieces = new ArrayList<>();
         for (final Tile tile : gameBoard) {
@@ -78,10 +87,17 @@ public class Board {
         return ImmutableList.copyOf(activePieces);
     }
 
+    /**
+     * @return gameBoard
+     */
     public List<Tile> getGameBoard() {
         return gameBoard;
     }
 
+    /**
+     * @param candidateDestinationCoordinate  candidate destination coordinate
+     * @return tile
+     */
     public Tile getTile(int candidateDestinationCoordinate) {
         return gameBoard.get(candidateDestinationCoordinate);
     }
@@ -94,6 +110,9 @@ public class Board {
         return ImmutableList.copyOf(tiles);
     }
 
+    /**
+     * @return board
+     */
     public static Board createStandardBoard() {
         final Builder builder = new Builder();
         // Black Layout
@@ -137,31 +156,47 @@ public class Board {
         return builder.build();
     }
 
+    /**
+     * @return blackPieces
+     */
     public Collection<Piece> getBlackPieces() {
         return blackPieces;
     }
-
+    /**
+     * @return whitePieces
+     */
     public Collection<Piece> getWhitePieces() {
         return whitePieces;
     }
 
+    /**
+     * @return whitePlayer
+     */
     public Player getWhitePlayer() {
         return this.whitePlayer;
     }
 
+    /**
+     * @return blackPlayer
+     */
     public Player getBlackPlayer() {
         return this.blackPlayer;
     }
-
+    /**
+     * @return currentPlayer
+     */
     public Player currentPlayer() {
         return this.currentPlayer;
     }
 
-    /**Getting black and white players' legal moves */
+    /**@return black and white players' legal moves */
     public Iterable<Move> getAllLegalMoves() {
         return Iterables.unmodifiableIterable(Iterables.concat(this.whitePlayer.getLegalMoves(), this.blackPlayer.getLegalMoves()));
     }
 
+    /**
+     * @return enPassantPawn
+     */
     public Pawn getEnPassantPawn() {
         return this.enPassantPawn;
     }
@@ -176,20 +211,34 @@ public class Board {
             this.boardConfig = new HashMap<>();
         }
 
+        /**
+         * @param piece piece
+         * @return this
+         */
         public Builder setPiece(final Piece piece) {
             this.boardConfig.put(piece.getPiecePosition(), piece);
             return this;
         }
 
+        /**
+         * @param nextMoveMaker
+         * @return
+         */
         public Builder setMoveMaker(final Alliance nextMoveMaker) {
             this.nextMoveMaker = nextMoveMaker;
             return this;
         }
 
+        /**
+         * @return new board
+         */
         public Board build() {
             return new Board(this);
         }
 
+        /**
+         * @param movedPawn movedPawn
+         */
         public void setEnPassantPawn(Pawn movedPawn) {
             this.enPassantPawn = movedPawn;
         }

@@ -14,6 +14,12 @@ public abstract class Piece {
     protected final PieceType pieceType;
     private final int cachedHashCode;
 
+    /**
+     * @param piecePosition piecePosition
+     * @param pieceAlliance pieceAlliance
+     * @param pieceType pieceType
+     * @param isFirstMove if it is a FirstMove
+     */
     Piece(final int piecePosition, final Alliance pieceAlliance, final PieceType pieceType, final boolean isFirstMove) {
         this.piecePosition = piecePosition;
         this.pieceAlliance = pieceAlliance;
@@ -37,6 +43,9 @@ public abstract class Piece {
                 pieceType == otherPiece.getPieceType();
     }
 
+    /**
+     * @return hash code
+     */
     private int computeHashCode() {
         int result = pieceType.hashCode();
         result = 31 * result + pieceAlliance.hashCode();
@@ -69,6 +78,9 @@ public abstract class Piece {
     }
 
 
+    /**
+     * methods that define a type of pieces
+     */
     public enum PieceType{
         PAWN(100, "P") {
             @Override
@@ -81,10 +93,6 @@ public abstract class Piece {
                 return false;
             }
 
-            @Override
-            public boolean isQueen() {
-                return false;
-            }
         },
         KNIGHT(300, "N") {
             @Override
@@ -97,10 +105,6 @@ public abstract class Piece {
                 return false;
             }
 
-            @Override
-            public boolean isQueen() {
-                return false;
-            }
         },
         BISHOP(300, "B") {
             @Override
@@ -113,10 +117,6 @@ public abstract class Piece {
                 return false;
             }
 
-            @Override
-            public boolean isQueen() {
-                return false;
-            }
         },
         ROOK(500, "R") {
             @Override
@@ -129,10 +129,6 @@ public abstract class Piece {
                 return true;
             }
 
-            @Override
-            public boolean isQueen() {
-                return false;
-            }
         },
         QUEEN(900, "Q") {
             @Override
@@ -145,10 +141,6 @@ public abstract class Piece {
                 return false;
             }
 
-            @Override
-            public boolean isQueen() {
-                return true;
-            }
         },
         KING(10000, "K") {
             @Override
@@ -161,10 +153,6 @@ public abstract class Piece {
                 return false;
             }
 
-            @Override
-            public boolean isQueen() {
-                return false;
-            }
         };
 
         private String pieceName;
@@ -182,7 +170,6 @@ public abstract class Piece {
 
         public abstract boolean isKing();
         public abstract boolean isRook();
-        public abstract boolean isQueen();
 
         public int getPieceValue() {
             return this.pieceValue;

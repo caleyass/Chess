@@ -19,9 +19,19 @@ public class Queen extends Piece{
 
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = { -9, -8, -7, -1, 1, 7, 8, 9 };
 
+    /**
+     * @param pieceAlliance pieceAlliance
+     * @param piecePosition piecePosition
+     */
     public Queen( final Alliance pieceAlliance, final int piecePosition) {
         super(piecePosition, pieceAlliance, PieceType.QUEEN, true);
     }
+
+    /**
+     * @param pieceAlliance pieceAlliance
+     * @param piecePosition piecePosition
+     * @param isFirstMove isFirstMove
+     */
     public Queen( final Alliance pieceAlliance, final int piecePosition, final boolean isFirstMove) {
         super(piecePosition, pieceAlliance, PieceType.QUEEN, isFirstMove);
     }
@@ -63,10 +73,19 @@ public class Queen extends Piece{
     public Queen movePiece(final Move move) {
         return new Queen(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
     }
-
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is a first column
+     */
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset==-9 || candidateOffset==7 || candidateOffset==-1);
     }
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is an eight column
+     */
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.EIGHT_COLUMN[currentPosition] && (candidateOffset==-7 || candidateOffset==9 || candidateOffset==1);
     }

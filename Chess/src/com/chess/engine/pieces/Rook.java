@@ -60,10 +60,19 @@ public class Rook extends Piece{
     public Rook movePiece(final Move move) {
         return new Rook(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
     }
-
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is a first column
+     */
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset==-1);
     }
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is an eight column
+     */
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.EIGHT_COLUMN[currentPosition] && (candidateOffset==1);
     }

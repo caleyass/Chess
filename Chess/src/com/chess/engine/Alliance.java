@@ -6,6 +6,9 @@ import com.chess.engine.player.Player;
 import com.chess.engine.player.WhitePlayer;
 
 public enum Alliance {
+    /**
+     * methods for a white alliance
+     */
     WHITE{
         @Override
         public int getDirection() {
@@ -34,6 +37,9 @@ public enum Alliance {
         }
 
     },
+    /**
+     * methods for a black alliance
+     */
     BLACK {
         @Override
         public int getDirection() {

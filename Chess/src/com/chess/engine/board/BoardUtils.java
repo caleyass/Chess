@@ -29,6 +29,9 @@ public class BoardUtils {
         throw new RuntimeException("You can`t instantiate me");
     }
 
+    /**
+     * @return string array of positions
+     */
     private static String[] initializeAlgebreicNotation() {
         return new String[]{
                 "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
@@ -41,6 +44,9 @@ public class BoardUtils {
                 "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"};
     }
 
+    /**
+     * @return positionToCoordinate
+     */
     private static Map<String, Integer> initializePositionToCoordinateMap() {
         final Map<String, Integer> positionToCoordinate = new HashMap<>();
         for (int i = 0; i < NUM_TILES; i++) {
@@ -60,6 +66,10 @@ public class BoardUtils {
         return column;
     }
 
+    /**
+     * @param rowNumber row number
+     * @return row
+     */
     private static boolean[] initRow(int rowNumber) {
         final boolean[] row = new boolean[NUM_TILES];
         do {
@@ -69,14 +79,18 @@ public class BoardUtils {
         return row;
     }
 
+    /**
+     * @param coordinate coordinate
+     * @return if is Valid Tile Coordinate
+     */
     public static boolean isValidTileCoordinate(final int coordinate){
         return coordinate>=0 && coordinate<NUM_TILES;
     }
 
-    public static int getCoordinateAtPosition(final String position){
-        return POSITION_TO_COORDINATE.get(position);
-    }
-
+    /**
+     * @param coordinate coordinate
+     * @return Position At Coordinate
+     */
     public static String getPositionAtCoordinate(final int coordinate) {
         return ALGEBRAIC_NOTATION[coordinate];
     }

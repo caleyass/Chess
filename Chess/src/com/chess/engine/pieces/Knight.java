@@ -17,11 +17,12 @@ import static com.chess.engine.board.Move.*;
 public class Knight extends Piece{
     private final static int[] CANDIDATE_MOVE_COORDINATES = {-17, -15, -10, -6, 6, 10, 15, 17};
 
+    /**
+     * @param pieceAlliance pieceAlliance
+     * @param piecePosition piecePosition
+     */
     public Knight( final Alliance pieceAlliance, final int piecePosition) {
         super(piecePosition, pieceAlliance, PieceType.KNIGHT, true);
-    }
-    public Knight( final Alliance pieceAlliance, final int piecePosition, final boolean isFirstMove) {
-        super(piecePosition, pieceAlliance, PieceType.KNIGHT, isFirstMove);
     }
     @Override
     public Collection<Move> calculateLegalMoves(final Board board) {
@@ -60,20 +61,37 @@ public class Knight extends Piece{
     public Knight movePiece(final Move move) {
         return new Knight(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
     }
-
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is a first column
+     */
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.FIRST_COLUMN[currentPosition] && ((candidateOffset == -17) || (candidateOffset == -10)
                 || (candidateOffset == 6) || (candidateOffset == 15));
     }
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is a second column
+     */
 
     private static boolean isSecondColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.SECOND_COLUMN[currentPosition] && ((candidateOffset == -10) || (candidateOffset == 6));
     }
-
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is a seventh column
+     */
     private static boolean isSeventhColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.SEVENTH_COLUMN[currentPosition] && ((candidateOffset == -6) || (candidateOffset == 10));
     }
-
+    /**
+     * @param currentPosition currentPosition
+     * @param candidateOffset candidateOffset
+     * @return if it is an eight column
+     */
     private static boolean isEightColumnExclusion(final int currentPosition, final int candidateOffset){
         return BoardUtils.EIGHT_COLUMN[currentPosition] && ((candidateOffset == -15) || (candidateOffset == -6)
                 || (candidateOffset == 10) || (candidateOffset == 17));

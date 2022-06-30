@@ -11,6 +11,12 @@ public class MoveTransition {
     private final Move transitionMove;
     private final MoveStatus moveStatus;
 
+    /**
+     * @param fromBoard previous board
+     * @param toBoard next board
+     * @param transitionMove transitionMove
+     * @param moveStatus moveStatus
+     */
     public MoveTransition(final Board fromBoard,
                           final Board toBoard,
                           final Move transitionMove,
@@ -19,18 +25,6 @@ public class MoveTransition {
         this.toBoard = toBoard;
         this.transitionMove = transitionMove;
         this.moveStatus = moveStatus;
-    }
-
-    public Board getFromBoard() {
-        return this.fromBoard;
-    }
-
-    public Board getToBoard() {
-        return this.toBoard;
-    }
-
-    public Move getTransitionMove() {
-        return this.transitionMove;
     }
 
     public MoveStatus getMoveStatus() {

@@ -23,6 +23,9 @@ public class TakenPiecesPanel extends JPanel {
     private static final Dimension TAKEN_PIECES_PANEL_DIMENSION = new Dimension(60,90);
     private static final EtchedBorder PANEL_BORDER = new EtchedBorder(EtchedBorder.RAISED);
 
+    /**
+     * base for taken pieces panel
+     */
     public TakenPiecesPanel() {
         super(new BorderLayout());
         setBackground(Color.decode("0xFDF5E6"));
@@ -36,6 +39,9 @@ public class TakenPiecesPanel extends JPanel {
         setPreferredSize(TAKEN_PIECES_PANEL_DIMENSION);
     }
 
+    /**
+     * @param moveLog done moves
+     */
     public void redo(final Table.MoveLog moveLog) {
         southPanel.removeAll();
         northPanel.removeAll();

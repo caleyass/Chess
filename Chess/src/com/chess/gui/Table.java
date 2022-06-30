@@ -5,9 +5,7 @@ import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
 import com.chess.engine.pieces.Piece;
-import com.chess.engine.player.MoveStatus;
 import com.chess.engine.player.MoveTransition;
-import com.chess.engine.player.Player;
 import com.chess.engine.player.ai.MiniMax;
 import com.chess.engine.player.ai.MoveStrategy;
 import com.google.common.collect.Lists;
@@ -60,15 +58,17 @@ public class Table extends Observable {
     private static Table INSTANCE = new Table();
 
 
+    /**
+     * potential players: human or computer
+     */
     enum PlayerType{
         HUMAN,
         COMPUTER
     }
 
-    public int getReturnValue() {
-        return returnValue;
-    }
-
+    /**
+     * base for table
+     */
     private Table() {
         this.gameFrame = new JFrame("Chess");
         this.gameFrame.setLayout(new BorderLayout());
@@ -89,6 +89,10 @@ public class Table extends Observable {
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.setVisible(true);
     }
+
+    /**
+     * @return restart table
+     */
     public Table restart(){
         this.gameFrame.dispose();
         INSTANCE = new Table();
@@ -103,6 +107,9 @@ public class Table extends Observable {
         return this.gameSetup;
     }
 
+    /**
+     * draws start board
+     */
     public void show() {
         invokeLater(new Runnable() {
             public void run() {
@@ -113,6 +120,9 @@ public class Table extends Observable {
         });
     }
 
+    /**
+     * @return menu of settings
+     */
     private JMenu createOptionsMenu(){
         final JMenu optionsMenu = new JMenu("Налаштування");
         final JMenuItem setupGameMenuItem = new JMenuItem("Налаштувати гравців");
@@ -130,12 +140,18 @@ public class Table extends Observable {
         return optionsMenu;
     }
 
+    /**
+     * @param gameSetup gameSetup
+     */
     private void setupUpdate(final GameSetup gameSetup){
         setChanged();
         notifyObservers(gameSetup);
 
     }
 
+    /**
+     * decide when game is over
+     */
     private static class TableGameAIWatcher implements Observer{
 
         @Override
@@ -166,7 +182,10 @@ public class Table extends Observable {
         }
 
 
-
+        /**
+         * show buttons and prints who won
+         * @param text who won
+         */
         private void showButton(String text) {
             String[] buttons = { "Нова гра", "Вийти" };
             returnValue = JOptionPane.showOptionDialog(null, text, "Перемога!",
@@ -205,20 +224,33 @@ public class Table extends Observable {
         return this.boardPanel;
     }
 
+    /**
+     * @param playerType playerType
+     */
     private void moveMadeUpdate(final PlayerType playerType){
         setChanged();
         notifyObservers(playerType);
     }
 
+    /**
+     * helps to adapt AI
+     */
     private static class AIThinkTank extends SwingWorker<Move, String>{
 
         private int searchDepth = 4;
+
+        /**
+         * @param searchDepth depth of ai thinking
+         */
         private AIThinkTank(int searchDepth){
             this.searchDepth = searchDepth;
         }
 
 
-
+        /**
+         * @return best move computed by AI
+         * @throws Exception
+         */
         @Override
         protected Move doInBackground() throws Exception{
 
@@ -254,6 +286,9 @@ public class Table extends Observable {
         return this.chessBoard;
     }
 
+    /**
+     * @return tableMenuBar
+     */
     private JMenuBar populateMenuBar() {
         final JMenuBar tableMenuBar = new JMenuBar();
 
@@ -493,6 +528,9 @@ public class Table extends Observable {
         }
     }
 
+    /**
+     * @return menu that can exit
+     */
     //Створює ячейку, яка розкривається
     private JMenu createFileMenu(){
         final JMenu fileMenu = new JMenu("Вийти");
@@ -515,6 +553,9 @@ public class Table extends Observable {
         return fileMenu;
     }
 
+    /**
+     * @return menu that can swap pieces
+     */
     private JMenu createPreferencesMenu() {
         final JMenu preferencesMenu = new JMenu("Огляд");
         final JMenuItem flipBoardMenuItem = new JMenuItem("Перевернути дошку");
