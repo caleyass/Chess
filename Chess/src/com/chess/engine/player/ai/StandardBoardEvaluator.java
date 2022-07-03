@@ -1,5 +1,6 @@
 package com.chess.engine.player.ai;
 
+import com.chess.engine.Alliance;
 import com.chess.engine.board.Board;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.player.Player;
@@ -25,7 +26,7 @@ public final class StandardBoardEvaluator implements BoardEvaluator {
      * @return score of player
      */
     private int scorePlayer(final Board board,final Player player,final int depth) {
-        return pieceValue(player)+mobility(player)+check(player) + checkMate(player, depth)+castled(player);
+        return pieceValue(player)+mobility(player)+check(player) + checkMate(player, depth)+castled(player)+forwardBonus(player);
     }
 
     /**
@@ -77,6 +78,21 @@ public final class StandardBoardEvaluator implements BoardEvaluator {
         int pieceValueScore = 0;
         for(final Piece piece: player.getActivePieces()){
             pieceValueScore+=piece.getPieceValue();
+        }
+        return pieceValueScore;
+    }
+
+    private int forwardBonus(final Player player) {
+        int pieceValueScore = 0;
+        if(player.getAlliance()== Alliance.WHITE) {
+            for (final Piece piece : player.getActivePieces()) {
+                pieceValueScore += 63 - piece.getPiecePosition();
+            }
+        }
+        else{
+            for (final Piece piece : player.getActivePieces()) {
+                pieceValueScore += piece.getPiecePosition();
+            }
         }
         return pieceValueScore;
     }
